@@ -29,10 +29,25 @@ class MarkovMachine {
     this.chains = chains
   }
 
+  static randomChoice(arr) {
+    return arr[Math.floor(Math.random() * arr.length)]
+  }
 
   /** return random text from chains */
 
   makeText(numWords = 100) {
-    // TODO
+      let keys = Array.from(this.chains.keys())
+      let key = MarkovMachine.randomChoice(keys)
+      let output = []
+
+      while (output.length < numWords && key !== null) {
+        output.push(key)
+        key = MarkovMachine.randomChoice(this.chains.get(key))
+      }
+      return output.join(' ')
   }
+}
+
+module.exports = {
+  MarkovMachine
 }
